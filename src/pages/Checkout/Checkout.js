@@ -433,7 +433,11 @@ export default function Demo(props) {
         <TabPane tab="02. RESULT" key="2">
           <ResultBookTicket {...props} />
         </TabPane>
-        <TabPane tab="03. CONFIRM" key="3" active={contentLink.length != 0}>
+        <TabPane
+          tab="03. CONFIRM"
+          key="3"
+          active={contentLink && contentLink.length != 0}
+        >
           <QRcode />
         </TabPane>
       </Tabs>
