@@ -44,6 +44,7 @@ export default function Film_Flip(props) {
   const convertLink = (url) => {
     return `https://www.youtube.com/embed/${getId(url)}`;
   };
+
   const getId = (url) => {
     const regExp =
       /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -102,7 +103,7 @@ export default function Film_Flip(props) {
                 {item.tenPhim}
               </div>
 
-              <div className="mx-20 w-40 bg-orange-300 cursor-pointer py-2 bg-white rounded-lg my-2 text-success-50 font-bold">
+              <div className="mx-20 w-40 bg-orange-300 cursor-pointer py-2 bg-white rounded-lg my-2 text-gray-700 font-bold">
                 <NavLink to={`/detail/${item.maPhim}`}> BOOK TICKET</NavLink>
               </div>
             </div>

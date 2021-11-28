@@ -252,6 +252,80 @@ function Checkout(props) {
   );
 }
 
+function ResultBookTicket(props) {
+  const dispatch = useDispatch();
+  const { infoUser } = useSelector((state) => state.ManageUserReducer);
+  const { userLogin } = useSelector((state) => state.ManageUserReducer);
+
+  useEffect(() => {
+    dispatch(getInfoUserAction());
+  }, []);
+
+  const renderTicketItem = function () {
+    return infoUser?.thongTinDatVe?.map((ticket, index) => {
+      const danhSachGhe = _.first(ticket.danhSachGhe);
+      return (
+        <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={index}>
+          <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
+            <img
+              alt="team"
+              className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+              src="https://picsum.photos/200/200"
+            />
+            <div className="flex-grow">
+              <h2 className="text-gray-900 title-font font-medium">
+                {ticket.tenPhim}
+              </h2>
+              <p className="text-gray-500">
+                {" "}
+                Time Start: {moment(ticket.ngayDat).format("hh:mm")} - Day
+                Start: {moment(ticket.ngayDat).format("DD-MM-YYYY")}
+              </p>
+              <p> Address: {danhSachGhe.tenHeThongRap} </p>
+              <p>
+                {" "}
+                Cinema: {danhSachGhe.tenCumRap} - Seat:{" "}
+                {ticket.danhSachGhe.map((seat, index) => {
+                  return <span key={index}>{seat.tenGhe}-</span>;
+                })}{" "}
+              </p>
+              <div className="flex justify-end">
+                <button
+                  className=" bg-gray-400 text-black duration-300 hover:bg-black hover:text-white font-semibold-border font-light py-2 px-6 rounded-md"
+                  onClick={() => {
+                    dispatch(setQRimage(index));
+                  }}
+                >
+                  Check out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  return (
+    <div className="p-5">
+      <section className="text-gray-600 body-font">
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-col text-center w-full mb-20">
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
+              Booking History
+            </h1>
+            <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
+              Please double-check your booking information and time. Hope you
+              can enjoy this moment with us.
+            </p>
+          </div>
+          <div className="flex flex-wrap -m-2">{renderTicketItem()}</div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function QRcode() {
   const dispatch = useDispatch();
   const { infoUser } = useSelector((state) => state.ManageUserReducer);
@@ -441,80 +515,6 @@ export default function Demo(props) {
           <QRcode />
         </TabPane>
       </Tabs>
-    </div>
-  );
-}
-
-function ResultBookTicket(props) {
-  const dispatch = useDispatch();
-  const { infoUser } = useSelector((state) => state.ManageUserReducer);
-  const { userLogin } = useSelector((state) => state.ManageUserReducer);
-
-  useEffect(() => {
-    dispatch(getInfoUserAction());
-  }, []);
-
-  const renderTicketItem = function () {
-    return infoUser?.thongTinDatVe?.map((ticket, index) => {
-      const danhSachGhe = _.first(ticket.danhSachGhe);
-      return (
-        <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={index}>
-          <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-            <img
-              alt="team"
-              className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-              src="https://picsum.photos/200/200"
-            />
-            <div className="flex-grow">
-              <h2 className="text-gray-900 title-font font-medium">
-                {ticket.tenPhim}
-              </h2>
-              <p className="text-gray-500">
-                {" "}
-                Time Start: {moment(ticket.ngayDat).format("hh:mm")} - Day
-                Start: {moment(ticket.ngayDat).format("DD-MM-YYYY")}
-              </p>
-              <p> Address: {danhSachGhe.tenHeThongRap} </p>
-              <p>
-                {" "}
-                Cinema: {danhSachGhe.tenCumRap} - Seat:{" "}
-                {ticket.danhSachGhe.map((seat, index) => {
-                  return <span key={index}>{seat.tenGhe}-</span>;
-                })}{" "}
-              </p>
-              <div className="flex justify-end">
-                <button
-                  className=" bg-gray-400 text-black duration-300 hover:bg-black hover:text-white font-semibold-border font-light py-2 px-6 rounded-md"
-                  onClick={() => {
-                    dispatch(setQRimage(index));
-                  }}
-                >
-                  Check out
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
-  };
-
-  return (
-    <div className="p-5">
-      <section className="text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-col text-center w-full mb-20">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-pink-600">
-              Booking History
-            </h1>
-            <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-              Please double-check your booking information and time. Hope you
-              can enjoy this moment with us.
-            </p>
-          </div>
-          <div className="flex flex-wrap -m-2">{renderTicketItem()}</div>
-        </div>
-      </section>
     </div>
   );
 }
