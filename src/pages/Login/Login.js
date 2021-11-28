@@ -48,7 +48,7 @@ export default function Login(props) {
           <div>
             <div>
               <div className="text-sm font-bold text-gray-700 tracking-wide">
-                Email Address
+                Username
               </div>
               <input
                 name="taiKhoan"
