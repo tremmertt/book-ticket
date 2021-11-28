@@ -246,23 +246,6 @@ function Checkout(props) {
             <PayPal id={props.match.params.id} />
           </div>
           <hr />
-
-          <div
-            className="mb-0 h-full flex flex-col items-center"
-            style={{ marginBottom: 0 }}
-          >
-            <div
-              onClick={() => {
-                let infoBookTicket = new InfoBookTicket();
-                infoBookTicket.maLichChieu = props.match.params.id;
-                infoBookTicket.danhSachVe = listSeatBooking;
-                dispatch(bookTicketAction(infoBookTicket));
-              }}
-              className="bg-pink-600 text-black w-full text-center py-3 font-bold text-2xl cursor-pointer"
-            >
-              BOOK TICKET
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -414,17 +397,6 @@ export default function Demo(props) {
     </Fragment>
   );
 
-  const filterQRHTML = () => {
-    if (contentLink) {
-      return (
-        <TabPane tab="03. CONFIRM" key="3">
-          <QRcode />
-        </TabPane>
-      );
-    }
-    return <div></div>;
-  };
-
   return (
     <div className="p-5">
       <Tabs
@@ -461,7 +433,9 @@ export default function Demo(props) {
         <TabPane tab="02. RESULT" key="2">
           <ResultBookTicket {...props} />
         </TabPane>
-        {filterQRHTML()}
+        <TabPane tab="03. CONFIRM" key="3" active={contentLink.length != 0}>
+          <QRcode />
+        </TabPane>
       </Tabs>
     </div>
   );
