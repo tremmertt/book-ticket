@@ -1,0 +1,158 @@
+$breakpoints: (
+    "extra-large": 1200px,
+    "large": 992px,
+    "medium": 768px,
+    "small": 576px,
+    "mini-small": 411px,
+);
+
+
+@mixin responsive($screen) {
+    @if (map-has-key($map: $breakpoints, $key: $screen)) {
+        // tìm thấy màn hình
+        // Lấy giá trị từ tên màn hình
+        // $value chứ giá trị lấy được
+        $value: map-get(
+            $map: $breakpoints,
+            $key: $screen,
+        );
+
+        @media screen and (max-width: $value) {
+            @content;
+        }
+    } @else {
+        @warn 'Screen does not exist.';
+    }
+}
+
+
+
+.movie__listCinemas {
+    border: 1px solid #ebebec;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+
+    .ant-collapse {
+        background-color: #ffffff;
+    }
+    .hideOnPC {
+        display: none;
+    }
+    .listCinemasMobile {
+        .titleCinemaMobile {
+            display: flex;
+            align-items: center;
+            .logoCinemasMobile {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+            }
+            .nameCinemasMobile {
+                font-size: 17px;
+            }
+        }
+        .titleCinemasChildMobile {
+            display: flex;
+            align-items: center;
+            .logoCinemasChildMobile {
+                width: 40px;
+                height: 40px;
+                margin-right: 10px;
+            }
+            .nameCinemasChildMobile {
+                color: #000;
+                font-weight: 600;
+            }
+            .addCinemasChildMobile {
+                font-size: 13px;
+                color: #9b9b9b;
+            }
+        }
+        .infoFilmCinemaMobile {
+            display: flex;
+            align-items: center;
+            .imgFilmMobile {
+                width: 40px;
+                height: 40px;
+                border-radius: 3px;
+                margin-right: 10px;
+            }
+            .infoFilmMobileDetail {
+                .typeAgeMobile {
+                    color: #fff;
+                    background-color: #fb4226;
+                    border-radius: 4px;
+                    min-width: 33px;
+                    text-align: center;
+                    display: inline-block;
+                    margin-right: 8px;
+                }
+                .nameFilmCinemaMobile {
+                    font-weight: 600;
+                }
+                .timeReviewFilmMobile {
+                    font-size: 12px;
+                    color: #9b9b9b;
+                }
+            }
+        }
+        .movieTime {
+            padding: 5px 10px;
+            border: 1px solid #9b9b9b;
+            text-align: center;
+            border-radius: 7px;
+            color: #9b9b9b;
+            background-color: #fafafa;
+            border: 1px solid #e4e4e4;
+            cursor: pointer;
+            margin: 0 10px 10px 0 !important;
+        }
+        .cinemaChildMobile {
+            .ant-collapse-content > .ant-collapse-content-box {
+                padding: 10px 0;
+                border: 0;
+            }
+            .ant-collapse.ant-collapse-icon-position-right.filmMobile {
+                border: none;
+            }
+        }
+        .ant-collapse.ant-collapse-icon-position-right.cinemaChildMobile {
+            border: none;
+            border-radius: 20px !important;
+        }
+    }
+}
+
+.tab-scroll-bar{
+    max-height: 650px;
+    overflow: auto;
+}
+
+.tab-scroll-bar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.tab-scroll-bar::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.tab-scroll-bar::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}
+
+// responsive
+@include responsive("medium") {
+    .hideOnMobile {
+        display: none !important;
+    }
+}
+@include responsive("medium") {
+    .movie__listCinemas .hideOnPC {
+        display: block !important;
+    }
+}

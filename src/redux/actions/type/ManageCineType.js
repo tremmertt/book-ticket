@@ -1,0 +1,3 @@
+export const SET_CINE_SYSTEM = "SET_CINE_SYSTEM";
+export const SET_DETAIL_FILM = "SET_DETAIL_FILM";
+export const SET_LIST_CINEMA = "SET_LIST_CINEMA";
