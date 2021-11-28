@@ -166,9 +166,7 @@
               ? _item.innerText.slice(0, 200) + "..."
               : "(empty)",
         };
-      }
-
-      console.table(_data);
+      } 
     }
 
     var timeOutCount = Object.keys(timedOutTests).length;
