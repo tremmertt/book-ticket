@@ -6,6 +6,7 @@ import { InfoBookTicket } from "../../_core/models/InfoBookTicket";
 export default function Paypal(props) {
   let paypal = useRef();
   const dispatch = useDispatch();
+  const usdUnit = 23850;
   const { listSeatBooking } = useSelector(
     (state) => state.ManageBookTicketReducer
   );
@@ -25,7 +26,15 @@ export default function Paypal(props) {
                 description: "Booking Ticket",
                 amount: {
                   currency_code: "USD",
-                  value: 650.0,
+                  value: parseFloat(
+                    (
+                      listSeatBooking.reduce((total, seat, index) => {
+                        return (total += seat.giaVe);
+                      }, 0) / usdUnit
+                    )
+                      .toLocaleString()
+                      .replace(",", ".")
+                  ).toFixed(2),
                 },
               },
             ],

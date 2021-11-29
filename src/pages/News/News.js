@@ -1,4 +1,5 @@
 import React from "react";
+import venomBanner from "../../assets/venomBanner.jpg";
 
 export default function News(props) {
   return (
@@ -25,7 +26,7 @@ export default function News(props) {
                 alt="..."
               />
 
-              <h3 className=" text-2xl leading-relaxed mb-6">
+              <h3 className=" text-2xl leading-relaxed my-6">
                 [MORTAL KOMBAT: THE WINNER WAR] - NAME POPULAR MOVIES
                 TRANSFORMED FROM POPULAR GAMES
               </h3>
@@ -84,7 +85,7 @@ export default function News(props) {
                 alt="..."
               />
 
-              <h3 className=" text-2xl leading-relaxed mb-6">
+              <h3 className=" text-2xl leading-relaxed my-6">
                 SHANG-CHI AND THE LEGEND OF THE TEN RINGS
               </h3>
               <p className="leading-relaxed mb-6 tracking-wide">
@@ -126,13 +127,9 @@ export default function News(props) {
                 <path d="M925.036 57.197h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.399 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l36 76c11.6 24.399 40.3 35.1 65.1 24.399 66.2-28.6 122.101-64.8 167.7-108.8 55.601-53.7 93.7-114.3 114.3-181.9 20.601-67.6 30.9-159.8 30.9-276.8v-239c0-27.599-22.401-50-50-50zM106.036 913.497c65.4-28.5 121-64.699 166.9-108.6 56.1-53.7 94.4-114.1 115-181.2 20.6-67.1 30.899-159.6 30.899-277.5v-239c0-27.6-22.399-50-50-50h-304c-27.6 0-50 22.4-50 50v304c0 27.601 22.4 50 50 50h145.5c-1.9 79.601-20.4 143.3-55.4 191.2-27.6 37.8-69.4 69.1-125.3 93.8-25.7 11.3-36.8 41.7-24.8 67.101l35.9 75.8c11.601 24.399 40.501 35.2 65.301 24.399z" />
               </svg>
 
-              <img
-                className="rounded-xl "
-                src="https://static.ssphim.net/static/5fe2d564b3fa6403ffa11d1c/618931af4cadee4d48374a98_Venom-2-3.jpg"
-                alt="..."
-              />
+              <img className="rounded-xl " src={venomBanner} alt="..." />
 
-              <h3 className=" text-2xl leading-relaxed mb-6">
+              <h3 className=" text-2xl leading-relaxed my-6">
                 VENOM 2: LET THERE BE CARNAGE
               </h3>
               <p className="leading-relaxed mb-6 tracking-wide">
@@ -178,7 +175,7 @@ export default function News(props) {
                 alt="..."
               />
 
-              <h3 className=" text-2xl leading-relaxed mb-6">
+              <h3 className=" text-2xl leading-relaxed my-6">
                 SPIDER-MAN: NO WAY HOME
               </h3>
               <p className="leading-relaxed mb-6 tracking-wide">
