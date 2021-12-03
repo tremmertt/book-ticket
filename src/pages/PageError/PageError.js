@@ -11,7 +11,7 @@ export default function PageError() {
         <Button
           type="primary"
           onClick={() => {
-            history.goBack();
+            history.push("/");
           }}
         >
           Back Home

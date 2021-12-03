@@ -10,6 +10,7 @@ export default function Paypal(props) {
   const { listSeatBooking } = useSelector(
     (state) => state.ManageBookTicketReducer
   );
+
   useEffect(() => {
     paypal.current.textContent = "";
     payment();
@@ -40,8 +41,7 @@ export default function Paypal(props) {
             ],
           });
         },
-        onApprove: async (data, actions) => {
-          const order = await actions.order.capture();
+        onApprove: async () => {
           let infoBookTicket = new InfoBookTicket();
           infoBookTicket.maLichChieu = props.id;
           infoBookTicket.danhSachVe = listSeatBooking;

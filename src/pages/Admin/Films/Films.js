@@ -156,6 +156,7 @@ export default function Films() {
 
   const onSearch = (value) => {
     //Call api
+    console.log("arrFilmDefault", arrFilmDefault);
     if (value && value.trim()) {
       setData(
         arrFilmDefault
@@ -211,7 +212,7 @@ export default function Films() {
 
   return (
     <div>
-      <h3 className="text-4xl"> Manage User </h3>
+      <h3 className="text-4xl mb-4"> Manage Film </h3>
       <Button
         className="mb-5"
         onClick={() => {

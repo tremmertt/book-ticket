@@ -22,7 +22,7 @@ export const ManageBookTicketReducer = (state = stateDefault, action) => {
 
     case SET_QR_IMAGE: {
       state.tabActive = "3";
-      state.contentLink = action.contentLink;
+      state.indexInfoBookTicket = action.indexInfoBookTicket;
       return { ...state };
     }
 

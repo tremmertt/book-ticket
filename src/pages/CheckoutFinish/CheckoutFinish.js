@@ -21,10 +21,12 @@ export default function CheckoutFinish(props) {
 
   const renderTicketItem = function () {
     console.log("infoUser.infoBkooTicket", infoUser);
-    const contentLink = parseInt(props.match.params.id.replace("!", ""));
+    const indexInfoBookTicket = parseInt(
+      props.match.params.id.replace("!", "")
+    );
     if (Object.keys(infoUser).length == 0) return <div>No information</div>;
 
-    const ticket = infoUser.thongTinDatVe[contentLink];
+    const ticket = infoUser.thongTinDatVe[indexInfoBookTicket];
 
     if (!ticket) return <div>No information</div>;
     const danhSachGhe = _.first(ticket.danhSachGhe);
@@ -49,8 +51,19 @@ export default function CheckoutFinish(props) {
             <p>
               {" "}
               Cinema: {danhSachGhe.tenCumRap} - Seat:{" "}
-              {ticket.danhSachGhe.map((seat, index) => {
-                return <span key={index}>{seat.tenGhe}-</span>;
+              {_.orderBy(
+                ticket.danhSachGhe,
+                function (item) {
+                  return parseInt(item.tenGhe);
+                },
+                "asc"
+              ).map((seat, index) => {
+                return (
+                  <span key={index}>
+                    {seat.tenGhe}
+                    {index != ticket.danhSachGhe.length - 1 ? "-" : ""}
+                  </span>
+                );
               })}{" "}
             </p>
           </div>

@@ -1,4 +1,6 @@
 import { manageBookTicketService } from "../../service/ManageBookTicketService";
+import { manageUserService } from "../../service/ManageUserService";
+import { SET_INFO_USER } from "./type/ManageUserType";
 import { InfoBookTicket } from "../../_core/models/InfoBookTicket";
 import {
   BOOK_TICKET_COMPLETE,
@@ -6,7 +8,6 @@ import {
   SET_DETAIL_TICKET_ROOM,
   SET_QR_IMAGE,
 } from "./type/ManageBookTicketType";
-import { SET_BOOK_TICKET_USER } from "../actions/type/ManageUserType";
 import { displayLoadingAction, hideLoadingAction } from "./LoadingAction";
 
 import Swal from "sweetalert2";
@@ -31,11 +32,12 @@ export const getDetailTicketRoomAction = (maLichChieu) => {
   };
 };
 
-export const setQRimage = (contentLink) => {
+export const setQRimage = (indexInfoBookTicket) => {
   return async (dispatch) => {
+    console.log("indexInfoBookTicket", indexInfoBookTicket);
     dispatch({
       type: SET_QR_IMAGE,
-      contentLink: contentLink,
+      indexInfoBookTicket: indexInfoBookTicket,
     });
   };
 };
@@ -52,24 +54,31 @@ export const bookTicketAction = (infoBookTicket = new InfoBookTicket()) => {
           title: "Booking successfully!",
           icon: "success",
           confirmButtonColor: "#44c020",
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.isConfirmed) {
-            dispatch({
-              type: SET_BOOK_TICKET_USER,
-              infoBookTicket: { ...infoBookTicket },
-            });
+            // loading ticket info of user
+            const result = await manageUserService.getInfoUser();
+            if (result.data.statusCode === 200) {
+              dispatch({
+                type: SET_INFO_USER,
+                infoUser: result.data.content,
+              });
+            }
           }
         });
       }
 
       await dispatch(getDetailTicketRoomAction(infoBookTicket.maLichChieu));
 
+      // clear listSeatBooking
       await dispatch({
         type: BOOK_TICKET_COMPLETE,
       });
 
+      // turn off loading
       await dispatch(hideLoadingAction);
 
+      // transition to checkout tab
       dispatch({ type: CHANGE_TAB });
     } catch (error) {
       console.log(error.response.data);

@@ -89,6 +89,7 @@ export default function Detail(props) {
             <h1 className="text-pink-600 text-2xl flex justify-center">
               <Rate
                 allowHalf
+                disabled
                 defaultValue={filmDetail.danhGia / 2}
                 style={{ color: "#ff6090", fontSize: 30 }}
               />
@@ -132,7 +133,7 @@ export default function Detail(props) {
                             <div className="mt-5" key={index}>
                               <div className="flex flex-row">
                                 <img
-                                  style={{ width: 60, height: 60 }}
+                                  style={{ width: 80, height: 80 }}
                                   src={cine.hinhAnh}
                                   alt={cine.hinhAnh}
                                 />
@@ -165,7 +166,7 @@ export default function Detail(props) {
                                       <NavLink
                                         to={`/checkout/${showtime.maLichChieu}`}
                                         key={index}
-                                        className="col-span-1 font-bold text-blue-400 ml-5"
+                                        className="w-20 px-2 py-3 ml-24 bg-white text-center hover:bg-gray-100 text-gray-800 font-semibold border border-gray-400 rounded shadow hover:text-black"
                                       >
                                         {moment(
                                           showtime.ngayChieuGioChieu

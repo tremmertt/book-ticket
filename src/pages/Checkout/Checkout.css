@@ -23,17 +23,9 @@
 }
 
 .seatBookedByMyself {
-  background-color: rgb(246, 246, 246);
-  -webkit-box-shadow: -1px 2px 18px -6px #ff79b0;
-  box-shadow: -1px 2px 18px -6px #ff79b0;
-  color: #ff79b0 !important;
-  border: 5x soild #ff79b0;
-}
-
-.seatBookedByMyself:hover {
-  background-color: #ff79b0;
+  background-color: #ff79b0 !important;
   -webkit-box-shadow: -1px 2px 18px -6px rgb(246, 246, 246);
   box-shadow: -1px 2px 18px -6px rgb(246, 246, 246);
   color: rgb(246, 246, 246) !important;
   border: 5x soild rgb(246, 246, 246);
-} 
+}

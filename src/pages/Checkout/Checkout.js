@@ -29,8 +29,6 @@ import { NavLink } from "react-router-dom";
 import PayPal from "./PayPal";
 function Checkout(props) {
   const { userLogin } = useSelector((state) => state.ManageUserReducer);
-  const { listCinema } = useSelector((state) => state.ManageCineReducer);
-  const filmDetail = useSelector((state) => state.ManageFilmReducer.filmDetail);
   const { detailTicketRoom, listSeatBooking } = useSelector(
     (state) => state.ManageBookTicketReducer
   );
@@ -53,13 +51,13 @@ function Checkout(props) {
         (seatB) => seatB.maGhe === seat.maGhe
       );
 
+      if (indexSeatB !== -1) {
+        classSeatBooking = "seatBooking";
+      }
+
       let classSeatBookedByMyself = "";
       if (userLogin.taiKhoan === seat.taiKhoanNguoiDat) {
         classSeatBookedByMyself = "seatBookedByMyself";
-      }
-
-      if (indexSeatB !== -1) {
-        classSeatBooking = "seatBooking";
       }
 
       return (
@@ -74,16 +72,21 @@ function Checkout(props) {
             disabled={seat.daDat}
             className={`seat ${classSeatVip} ${classSeatBooked} ${classSeatBooking} ${classSeatBookedByMyself} text-center`}
             key={index}
+            style={{ padding: "auto" }}
           >
             {" "}
-            {seat.seatBooked ? (
+            {seat.daDat ? (
               classSeatBookedByMyself != "" ? (
                 <UserOutlined
-                  style={{ marginBottom: 7.5, fontWeight: "bold" }}
+                  style={{
+                    fontWeight: "bold",
+                  }}
                 />
               ) : (
                 <CloseOutlined
-                  style={{ marginBottom: 7.5, fontWeight: "bold" }}
+                  style={{
+                    fontWeight: "bold",
+                  }}
                 />
               )
             ) : (
@@ -192,12 +195,12 @@ function Checkout(props) {
             đ{" "}
           </h3>
           <hr />
-          <h3 className="text-xl"> {thongTinPhim.tenPhim} </h3>
-          <p>
+          <h3 className="text-xl mb-2"> {thongTinPhim.tenPhim} </h3>
+          <p className="mb-2">
             {" "}
             ADDRESS: {thongTinPhim.tenCumRap} - {thongTinPhim.tenRap}{" "}
           </p>
-          <p>
+          <p className="mb-2">
             {" "}
             DAY START: {thongTinPhim.ngayChieu} - {thongTinPhim.gioChieu}{" "}
           </p>
@@ -255,7 +258,6 @@ function Checkout(props) {
 function ResultBookTicket(props) {
   const dispatch = useDispatch();
   const { infoUser } = useSelector((state) => state.ManageUserReducer);
-  const { userLogin } = useSelector((state) => state.ManageUserReducer);
 
   useEffect(() => {
     dispatch(getInfoUserAction());
@@ -285,8 +287,19 @@ function ResultBookTicket(props) {
               <p>
                 {" "}
                 Cinema: {danhSachGhe.tenCumRap} - Seat:{" "}
-                {ticket.danhSachGhe.map((seat, index) => {
-                  return <span key={index}>{seat.tenGhe}-</span>;
+                {_.orderBy(
+                  ticket.danhSachGhe,
+                  function (item) {
+                    return parseInt(item.tenGhe);
+                  },
+                  "asc"
+                ).map((seat, index) => {
+                  return (
+                    <span key={index}>
+                      {seat.tenGhe}
+                      {index != ticket.danhSachGhe.length - 1 ? "-" : ""}
+                    </span>
+                  );
                 })}{" "}
               </p>
               <div className="flex justify-end">
@@ -329,7 +342,9 @@ function ResultBookTicket(props) {
 function QRcode() {
   const dispatch = useDispatch();
   const { infoUser } = useSelector((state) => state.ManageUserReducer);
-  const { contentLink } = useSelector((state) => state.ManageBookTicketReducer);
+  const { indexInfoBookTicket } = useSelector(
+    (state) => state.ManageBookTicketReducer
+  );
 
   const [qrCode, setQrCode] = useState("");
 
@@ -337,15 +352,18 @@ function QRcode() {
     dispatch(getInfoUserAction());
     const domain = window.location.hostname;
     setQrCode(
-      `http://api.qrserver.com/v1/create-qr-code/?data=http://${domain}/checkout-finish/${contentLink}!&size=200x200&bgcolor=ffffff`
+      `http://api.qrserver.com/v1/create-qr-code/?
+        data=http://${domain}/checkout-finish/${indexInfoBookTicket}!
+        &size=200x200
+        &bgcolor=ffffff`
     );
-  }, [qrCode, contentLink]);
+  }, [qrCode, indexInfoBookTicket]);
 
   const renderTicketItem = function () {
-    const ticket = infoUser.thongTinDatVe[parseInt(contentLink)];
+    const ticket = infoUser.thongTinDatVe[parseInt(indexInfoBookTicket)];
     const danhSachGhe = _.first(ticket.danhSachGhe);
     return (
-      <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
+      <div className="w-full">
         <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
           <img
             alt="team"
@@ -365,8 +383,19 @@ function QRcode() {
             <p>
               {" "}
               Cinema: {danhSachGhe.tenCumRap} - Seat:{" "}
-              {ticket.danhSachGhe.map((seat, index) => {
-                return <span key={index}>{seat.tenGhe}-</span>;
+              {_.orderBy(
+                ticket.danhSachGhe,
+                function (item) {
+                  return parseInt(item.tenGhe);
+                },
+                "asc"
+              ).map((seat, index) => {
+                return (
+                  <span key={index}>
+                    {seat.tenGhe}
+                    {index != ticket.danhSachGhe.length - 1 ? "-" : ""}
+                  </span>
+                );
               })}{" "}
             </p>
           </div>
@@ -384,10 +413,10 @@ function QRcode() {
               Confirm ticket
             </h1>
 
-            <div className="flex justify-center">
+            <div className="flex flex-col align-middle justify-center items-center">
               {" "}
-              {renderTicketItem()}
-              <img src={qrCode} alt="" />
+              <div>{renderTicketItem()}</div>
+              <img src={qrCode} alt="" width="250" className=" mt-6" />
               <a href={qrCode} download="QRCode">
                 {/* <button type="button">Download</button> */}
               </a>
@@ -417,7 +446,9 @@ export default function Demo(props) {
   });
   const dispatch = useDispatch();
 
-  const { contentLink } = useSelector((state) => state.ManageBookTicketReducer);
+  const { indexInfoBookTicket } = useSelector(
+    (state) => state.ManageBookTicketReducer
+  );
   const { userLogin } = useSelector((state) => state.ManageUserReducer);
   useEffect(() => {
     return () => {
@@ -510,7 +541,8 @@ export default function Demo(props) {
         <TabPane
           tab="03. CONFIRM"
           key="3"
-          active={contentLink && contentLink.length != 0}
+          disabled={!indexInfoBookTicket}
+          active={indexInfoBookTicket && indexInfoBookTicket.length != 0}
         >
           <QRcode />
         </TabPane>

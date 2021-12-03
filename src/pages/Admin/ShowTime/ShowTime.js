@@ -103,7 +103,13 @@ export default function ShowTime(props) {
         {" "}
         Create Showtime - {props.match.params.tenPhim}{" "}
       </h3>
-      <img src={film.hinhAnh} alt="..." width={200} height={100} />
+      <img
+        src={film.hinhAnh}
+        alt="..."
+        width={200}
+        height={100}
+        className="mt-5"
+      />
       <Form.Item label="Theater System">
         <Select
           options={convertSelectCineSystem()}
@@ -125,7 +131,7 @@ export default function ShowTime(props) {
 
       <Form.Item label="Show date - Show time">
         <DatePicker
-          format="DD-MM-YYYY hh:mm:ss"
+          format="DD-MM-YYYY hh:mm:ss A"
           showTime
           onChange={onChangeDate}
           onOk={onOk}

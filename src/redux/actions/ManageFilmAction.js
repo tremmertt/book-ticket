@@ -23,9 +23,7 @@ export const getListFilmAction = (tenPhim = "") => {
 };
 
 export const getListFilmNowPlayingAction = () => {
-  console.log("213123", 123);
   return async (dispatch) => {
-    console.log("dispatch", dispatch);
     try {
       dispatch({
         type: SET_FILM_NOW_PLAYING,
